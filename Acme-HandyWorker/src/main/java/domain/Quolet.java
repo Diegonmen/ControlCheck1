@@ -1,3 +1,4 @@
+
 package domain;
 
 import java.util.Date;
@@ -13,12 +14,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 public class Quolet extends DomainEntity {
 
-	private String ticker;
-	private Date publicationMoment;
-	private Date spanishPublicationMoment;
-	private String body;
-	private String picture;
-	private Boolean finalMode;
+	private String	ticker;
+	private Date	publicationMoment;
+	private String	body;
+	private String	picture;
+	private Boolean	finalMode;
+
 
 	@Pattern(regexp = "^[0-9]{6}#\\d{1,3}$")
 	public String getTicker() {
@@ -36,15 +37,6 @@ public class Quolet extends DomainEntity {
 
 	public void setPublicationMoment(Date publicationMoment) {
 		this.publicationMoment = publicationMoment;
-	}
-
-	@DateTimeFormat(pattern = "dd-MM-yy hh:mm")
-	public Date getSpanishPublicationMoment() {
-		return this.spanishPublicationMoment;
-	}
-
-	public void setSpanishPublicationMoment(Date spanishPublicationMoment) {
-		this.spanishPublicationMoment = spanishPublicationMoment;
 	}
 
 	@NotBlank
