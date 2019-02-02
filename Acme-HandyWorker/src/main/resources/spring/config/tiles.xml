@@ -40,7 +40,7 @@
 		<value>/views/complaint/tiles.xml</value>
 		<value>/views/box/tiles.xml</value>
 		<value>/views/socialIdentity/tiles.xml</value>
-		
+		<value>/views/quolet/tiles.xml</value>
 		
 	</util:list>
 

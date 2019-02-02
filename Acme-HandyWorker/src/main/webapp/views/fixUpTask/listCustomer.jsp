@@ -20,6 +20,8 @@
 <spring:message code="fixUpTask.maxPrice" var="maxPrice" />
 <spring:message code="fixUpTask.startDate" var="startDate" />
 <spring:message code="fixUpTask.endDate" var="endDate" />
+<spring:message code="fixUpTask.quolets" var="quolets" />
+<spring:message code="fixUpTask.listQuolets" var="listQuolets" />
 <spring:message code="fixUpTask.category" var="category" />
 <spring:message code="fixUpTask.warranty" var="warranty" />
 <spring:message code="fixUpTask.phases" var="phases" />
@@ -41,6 +43,9 @@
 		</display:column>
 		<display:column title="${phases}">
 			<a href="javascript:showDialog('view-phases', sucessPhases, 'q=${row.id}', 'fixuptask/async/phases.do')">${view}</a>
+		</display:column>
+		<display:column title="${quolets}">
+		<a href="quolet/list.do?fixUpTaskId=${row.id}">${listQuolets}</a>
 		</display:column>
 		<%-- <display:column title="${complaints}">
 			<a href="javascript:showDialog('view-complaints', sucessComplaints, 'q=${row.id}', 'fixuptask/async/complaints.do')">${view}</a>

@@ -30,11 +30,62 @@
 			</list>
 		</property>
 	</bean>
+	
+	<!--password: customer0 -->
+	<bean id="userAccount5" class="security.UserAccount">
+		<property name="username" value="customer0" />
+		<property name="password"
+			value="5db2d12c8faad9e49884e367696d47ef" />
+		<property name="enabled" value="true" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CUSTOMER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
 	<!--password: super -->
 	
 
 	<!-- Boxes -->
+
+	<bean id="customer0_box0" class="domain.Box">
+		<property name="name" value="INBOX" />
+		<property name="predefined" value="true" />
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="customer0_box1" class="domain.Box">
+		<property name="name" value="OUTBOX" />
+		<property name="predefined" value="true" />
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="customer0_box2" class="domain.Box">
+		<property name="name" value="TRASHBOX" />
+		<property name="predefined" value="true" />
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="customer0_box3" class="domain.Box">
+		<property name="name" value="SPAMBOX" />
+		<property name="predefined" value="true" />
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+	</bean>
 
 	<!-- Admin Boxes -->
 
@@ -291,12 +342,59 @@
 		<property name="parentCategory" ref = "categorySuper">
 		</property>
 	</bean>
+	
+	<!-- Warranty -->
+
+	<bean id="warranty0" class="domain.Warranty">
+		<property name="title" value="warrantyTitle0" />
+		<property name="terms" value="warrantyTerms0" />
+		<property name="applicableLaws" value="applicableLaws0" />
+		<property name="finalMode" value="true">
+		</property>
+	</bean>
 
 	<!-- Phases -->
 
 	
 
 	<!-- Actors -->
+	<bean id="customer0" class="domain.Customer">
+		<property name="name" value="customer_name_0" />
+		<property name="middleName" value="customer_middleName0" />
+		<property name="surname" value="customer_surname0" />
+		<property name="email" value="customeremail0@mail.com" />
+		<property name="photo"
+			value="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThYg72q-7KxNoiVfWXHQp3VUvy0WwbBnJZfIM9LSefhVdEmNxa" />
+		<property name="phoneNumber" value="600000001" />
+		<property name="address" value="Seville" />
+		<property name="suspicious" value="false" />
+		<property name="userAccount" ref="userAccount5" />
+		<property name="socialIdentity">
+			<list>
+			</list>
+		</property>
+		<property name="boxes">
+			<list>
+				<ref bean="customer0_box0" />
+				<ref bean="customer0_box1" />
+				<ref bean="customer0_box2" />
+				<ref bean="customer0_box3" />
+			</list>
+		</property>
+		<property name="fixUpTasks">
+			<list>
+				<ref bean="fixUpTask0" />
+			</list>
+		</property>
+		<property name="endorsements">
+			<list>
+			</list>
+		</property>
+		<property name="complaints">
+			<list>
+			</list>
+		</property>
+	</bean>
 
 	<!-- Admins -->
 
@@ -324,7 +422,81 @@
 			</list>
 		</property>
 	</bean>
+	
+	<!-- FixUpTasks -->
+	<bean id="fixUpTask0" class="domain.FixUpTask">
+		<property name="ticker" value="970203-984567" />
+		<property name="publicationMoment" value="2018/01/10 8:30" />
+		<property name="description" value="fixUpTaskDescription0" />
+		<property name="address" value="fixUpTaskAddress0" />
+		<property name="maxPrice" value="24.00" />
+		<property name="startDate" value="2019/02/04 9:30" />
+		<property name="endDate" value="2019/03/12 10:46" />
+		<property name="applications">
+			<list>
+			</list>
+		</property>
+		<property name="category" ref="soundproofing" />
+		<property name="warranty" ref="warranty0" />
+		<property name="phases">
+			<list>
+			</list>
+		</property>
+		<property name="complaints">
+			<list>
+			</list>
+		</property>
+		 <property name="quolets">
+		 	<list>
+		 		<ref bean="TESTquolet0"/>
+		 		<ref bean="TESTquolet1"/>
+		 		<ref bean="TESTquolet2"/>
+		 		<ref bean="TESTquolet3"/>
+		 	</list>
+		 </property>
+	</bean>
 
+
+	<!-- Quolets -->
+	
+	<bean id="TESTquolet0" class="domain.Quolet">
+		<property name="ticker" value="190202#127"/>
+		<property name="publicationMoment" value="19/02/02 17:00"/>
+		<property name="spanishPublicationMoment" value = "19/02/02 17:00"/>
+		<property name="body" value="body0"/>
+		<property name="picture" value = "https://www.pexels.com/photo/landscape-nature-wilderness-view-68147/"/>
+		<property name="finalMode" value = "false"/>
+	</bean>
+	
+	<bean id="TESTquolet1" class="domain.Quolet">
+		<property name="ticker" value="190101#135"/>
+		<property name="publicationMoment" value="19/01/01 17:00"/>
+		<property name="spanishPublicationMoment" value = "19/01/01 17:00"/>
+		<property name="body" value="body1"/>
+		<property name="picture"
+		 value = "https://www.pexels.com/photo/landscape-nature-wilderness-view-68147/"/>
+		<property name="finalMode" value = "false"/>
+	</bean>
+	
+	<bean id="TESTquolet2" class="domain.Quolet">
+		<property name="ticker" value="180707#142"/>
+		<property name="publicationMoment" value="18/07/07 17:00"/>
+		<property name="spanishPublicationMoment" value = "18/07/07 17:00"/>
+		<property name="body" value="body2"/>
+		<property name="picture"
+		 value = "https://www.pexels.com/photo/landscape-nature-wilderness-view-68147/"/>
+		<property name="finalMode" value = "false"/>
+	</bean>
+	
+	<bean id="TESTquolet3" class="domain.Quolet">
+		<property name="ticker" value="180808#154"/>
+		<property name="publicationMoment" value="18/08/08 17:00"/>
+		<property name="spanishPublicationMoment" value = "18/08/08 17:00"/>
+		<property name="body" value="body3"/>
+		<property name="picture"
+		 value = ""/>
+		<property name="finalMode" value = "false"/>
+	</bean>
 	
 
 </beans>

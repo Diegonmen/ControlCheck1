@@ -24,14 +24,13 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Entity
 public class FixUpTask extends DomainEntity {
 
-	private String	ticker;
-	private Date	publicationMoment;
-	private String	description;
-	private String	address;
-	private float	maxPrice;
-	private Date	startDate;
-	private Date	endDate;
-
+	private String ticker;
+	private Date publicationMoment;
+	private String description;
+	private String address;
+	private float maxPrice;
+	private Date startDate;
+	private Date endDate;
 
 	@NotBlank
 	@Column(unique = true)
@@ -103,15 +102,14 @@ public class FixUpTask extends DomainEntity {
 		this.endDate = endDate;
 	}
 
-
 	// Relationships ----------------------------------------------------------
 
-	private Collection<Application>	applications;
-	private Category				category;
-	private Warranty				warranty;
-	private Collection<Phase>		phases;
-	private Collection<Complaint>	complaints;
-
+	private Collection<Application> applications;
+	private Category category;
+	private Warranty warranty;
+	private Collection<Phase> phases;
+	private Collection<Complaint> complaints;
+	private Collection<Quolet> quolets;
 
 	@Valid
 	@ManyToOne(optional = false)
@@ -159,6 +157,15 @@ public class FixUpTask extends DomainEntity {
 
 	public void setComplaints(final Collection<Complaint> complaints) {
 		this.complaints = complaints;
+	}
+
+	@OneToMany
+	public Collection<Quolet> getQuolets() {
+		return this.quolets;
+	}
+
+	public void setQuolets(Collection<Quolet> quolets) {
+		this.quolets = quolets;
 	}
 
 }
