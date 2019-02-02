@@ -41,8 +41,10 @@
 	
 	<input type="submit" name="save" value="<spring:message code="quolet.save" />">
 	
-	<input type="submit" name="delete" value="<spring:message code="quolet.delete" />">
-	
-	<input type="button" name="cancel" value="<spring:message code="quolet.cancel" />" onclick="javascript: relativeRedir('quolet/list.do')">
+	<jstl:if test="${quolet.finalMode==false }">
+			<input type="submit" class="btn btn-warning" name="delete" value="<spring:message code="quolet.delete" />">
+	</jstl:if>
+ 	
+	<input type="button" name="cancel" value="<spring:message code="quolet.cancel" />" onclick="javascript: relativeRedir('welcome/index.do')">
 	
 </form:form>

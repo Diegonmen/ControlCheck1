@@ -18,8 +18,16 @@ public class QuoletService {
 	@Autowired
 	private QuoletRepository quoletRepository;
 
+	@Autowired
+	private CustomerService customerService;
+
 	public Quolet save(Quolet quolet) {
-		return this.quoletRepository.save(quolet);
+		FixUpTask fixuptask = this.findFixUpTaskByQuolet(quolet);
+		Quolet saved = this.quoletRepository.save(quolet);
+		fixuptask.getQuolets().remove(quolet);
+		fixuptask.getQuolets().add(saved);
+		this.customerService.saveCustomerFixUpTask(fixuptask);
+		return saved;
 	}
 
 	public List<Quolet> findAll() {
@@ -35,6 +43,10 @@ public class QuoletService {
 	}
 
 	public void delete(Integer id) {
+		Quolet quolet = this.findOne(id);
+		FixUpTask fixUpTask = this.findFixUpTaskByQuolet(quolet);
+		fixUpTask.getQuolets().remove(quolet);
+		this.customerService.saveCustomerFixUpTask(fixUpTask);
 		this.quoletRepository.delete(id);
 	}
 

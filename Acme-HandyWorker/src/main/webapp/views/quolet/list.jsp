@@ -29,9 +29,11 @@
 	<display:column property="picture" title="${picture}" />
 	
 	<display:column>
-		<a href="quolet/edit.do?quoletId=${row.id}"> <spring:message code="quolet.edit" />
-		</a>
+	<jstl:if test="${!row.finalMode }">
+		<a href="quolet/edit.do?quoletId=${row.id}"> <spring:message code="quolet.edit" /></a>
+	</jstl:if>
 	</display:column>
+	
 	</display:table>
 	
 	<input type="button" class="ui button" name="create"

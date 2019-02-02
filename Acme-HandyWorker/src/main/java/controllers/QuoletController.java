@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import domain.FixUpTask;
 import domain.Quolet;
 import services.FixUpTaskService;
 import services.QuoletService;
@@ -76,10 +77,25 @@ public class QuoletController extends AbstractController {
 		} else
 			try {
 				this.quoletService.save(quolet);
-				result = new ModelAndView("redirect:/quolet/list.do");
+				FixUpTask fixUpTask = this.quoletService.findFixUpTaskByQuolet(quolet);
+				result = new ModelAndView("redirect:/quolet/list.do?fixUpTaskId=" + fixUpTask.getId());
 			} catch (Throwable oops) {
 				result = this.createEditModelAndView(quolet, "quolet.commit.error");
 			}
+		return result;
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(Quolet quolet, BindingResult binding) {
+		ModelAndView result;
+		try {
+			FixUpTask fixUpTask = this.quoletService.findFixUpTaskByQuolet(quolet);
+			this.quoletService.delete(quolet.getId());
+			result = new ModelAndView("redirect:/quolet/list.do?fixUpTaskId=" + fixUpTask.getId());
+		} catch (Throwable oops) {
+			result = this.createEditModelAndView(this.quoletService.findOne(quolet.getId()), "warranty.commit.error");
+		}
+
 		return result;
 	}
 
