@@ -26,4 +26,9 @@
 		<put-attribute name="body" value="/views/quolet/edit.jsp" />
 	</definition>
 	
+	<definition name="quolet/create" extends="master.page">	
+		<put-attribute name="title" value="Crear" />
+		<put-attribute name="body" value="/views/quolet/create.jsp" />
+	</definition>
+	
 </tiles-definitions>

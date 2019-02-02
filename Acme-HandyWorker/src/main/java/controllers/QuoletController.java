@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import domain.FixUpTask;
 import domain.Quolet;
+import services.CustomerService;
 import services.FixUpTaskService;
 import services.QuoletService;
 
@@ -30,17 +31,21 @@ public class QuoletController extends AbstractController {
 	@Autowired
 	private FixUpTaskService fixUpTaskService;
 
+	@Autowired
+	private CustomerService customerService;
+
 	public QuoletController() {
 		super();
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
+	public ModelAndView create(@RequestParam int fixUpTaskId) {
 		ModelAndView result;
 		Quolet quolet;
 
 		quolet = this.quoletService.create();
 		result = this.createEditModelAndView(quolet);
+		result.addObject("fixUpTaskId", fixUpTaskId);
 		return result;
 	}
 
@@ -49,6 +54,7 @@ public class QuoletController extends AbstractController {
 		ModelAndView model = new ModelAndView("quolet/list");
 		Collection<Quolet> quolets = this.fixUpTaskService.findOne(fixUpTaskId).getQuolets();
 		model.addObject("list", quolets);
+		model.addObject("fixUpTaskId", fixUpTaskId);
 
 		return model;
 	}
@@ -66,7 +72,8 @@ public class QuoletController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid Quolet quolet, BindingResult binding) {
+	public ModelAndView save(@RequestParam(required = false) Integer fixUpTaskId, @Valid Quolet quolet,
+			BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors()) {
@@ -76,9 +83,17 @@ public class QuoletController extends AbstractController {
 						e.getObjectName() + " error [" + e.getDefaultMessage() + "] " + Arrays.toString(e.getCodes()));
 		} else
 			try {
-				this.quoletService.save(quolet);
-				FixUpTask fixUpTask = this.quoletService.findFixUpTaskByQuolet(quolet);
-				result = new ModelAndView("redirect:/quolet/list.do?fixUpTaskId=" + fixUpTask.getId());
+				if (!this.quoletService.exists(quolet.getId())) {
+					FixUpTask fixUpTask = this.fixUpTaskService.findOne(fixUpTaskId);
+					fixUpTask.getQuolets().add(quolet);
+					this.customerService.saveCustomerFixUpTask(fixUpTask);
+					result = new ModelAndView("redirect:/quolet/list.do?fixUpTaskId=" + fixUpTaskId);
+
+				} else {
+					FixUpTask fixUpTask = this.quoletService.findFixUpTaskByQuolet(quolet);
+					this.quoletService.save(quolet, fixUpTask);
+					result = new ModelAndView("redirect:/quolet/list.do?fixUpTaskId=" + fixUpTask.getId());
+				}
 			} catch (Throwable oops) {
 				result = this.createEditModelAndView(quolet, "quolet.commit.error");
 			}

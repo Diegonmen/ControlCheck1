@@ -159,7 +159,7 @@ public class FixUpTask extends DomainEntity {
 		this.complaints = complaints;
 	}
 
-	@OneToMany
+	@OneToMany(cascade = { CascadeType.ALL, CascadeType.MERGE })
 	public Collection<Quolet> getQuolets() {
 		return this.quolets;
 	}

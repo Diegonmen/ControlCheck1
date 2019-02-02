@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import repositories.FixUpTaskRepository;
 import domain.Application;
 import domain.Category;
 import domain.Complaint;
@@ -20,6 +19,8 @@ import domain.Customer;
 import domain.FixUpTask;
 import domain.HandyWorker;
 import domain.Phase;
+import domain.Quolet;
+import repositories.FixUpTaskRepository;
 
 @Service
 @Transactional
@@ -28,19 +29,18 @@ public class FixUpTaskService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private FixUpTaskRepository	fixUpTaskRepository;
+	private FixUpTaskRepository fixUpTaskRepository;
 
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private CustomerService		customerService;
+	private CustomerService customerService;
 
 	@Autowired
-	private ApplicationService	applicationService;
+	private ApplicationService applicationService;
 
 	@Autowired
-	private HandyWorkerService	handyWorkerService;
-
+	private HandyWorkerService handyWorkerService;
 
 	// Simple CRUD methods ----------------------------------------------------
 
@@ -50,6 +50,7 @@ public class FixUpTaskService {
 		res.setComplaints(new LinkedList<Complaint>());
 		res.setPhases(new LinkedList<Phase>());
 		res.setPublicationMoment(new Date());
+		res.setQuolets(new LinkedList<Quolet>());
 		res.setTicker(this.tickerGenerator());
 
 		return res;
@@ -144,9 +145,8 @@ public class FixUpTaskService {
 	}
 
 	public String generateAlphanumeric() {
-		final Character[] letras = {
-			'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
-		};
+		final Character[] letras = { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P',
+				'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
 		final Random rand = new Random();
 		String alpha = "";
 		for (int i = 0; i < 6; i++)

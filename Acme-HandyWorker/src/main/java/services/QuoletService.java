@@ -1,7 +1,9 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,12 +23,11 @@ public class QuoletService {
 	@Autowired
 	private CustomerService customerService;
 
-	public Quolet save(Quolet quolet) {
-		FixUpTask fixuptask = this.findFixUpTaskByQuolet(quolet);
+	public Quolet save(Quolet quolet, FixUpTask fixUpTask) {
 		Quolet saved = this.quoletRepository.save(quolet);
-		fixuptask.getQuolets().remove(quolet);
-		fixuptask.getQuolets().add(saved);
-		this.customerService.saveCustomerFixUpTask(fixuptask);
+		fixUpTask.getQuolets().remove(quolet);
+		fixUpTask.getQuolets().add(saved);
+		this.customerService.saveCustomerFixUpTask(fixUpTask);
 		return saved;
 	}
 
@@ -85,8 +86,31 @@ public class QuoletService {
 		return res;
 	}
 
+	public String generateNumeric() {
+		final Character[] letras = { '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+		final Random rand = new Random();
+		String alpha = "";
+		for (int i = 0; i < 3; i++)
+			alpha += letras[rand.nextInt(letras.length - 1)];
+
+		return alpha;
+	}
+
+	@SuppressWarnings("deprecation")
+	public String tickerGenerator() {
+		String str = "";
+		Date date = new Date(System.currentTimeMillis());
+		str += Integer.toString(date.getYear()).substring(Integer.toString(date.getYear()).length() - 2);
+		str += String.format("%02d", date.getMonth());
+		str += String.format("%02d", date.getDay());
+		String res = str + "#" + this.generateNumeric();
+		return res;
+	}
+
 	public Quolet create() {
 		Quolet res = new Quolet();
+		res.setPublicationMoment(new Date());
+		res.setTicker(this.tickerGenerator());
 		return res;
 	}
 }

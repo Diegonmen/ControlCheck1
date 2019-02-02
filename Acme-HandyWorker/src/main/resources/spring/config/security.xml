@@ -68,6 +68,7 @@
 		
 		<security:intercept-url pattern="/quolet/list.do" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/quolet/edit.do" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/quolet/create.do" access="hasRole('CUSTOMER')" />
 		
 		<security:intercept-url pattern="/application/handyworker/save-async.do" access="hasRole('HANDYWORKER')" />
 		<security:intercept-url pattern="/application/list.do" access="hasAnyRole('HANDYWORKER','CUSTOMER')" />
