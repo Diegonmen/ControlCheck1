@@ -59,6 +59,14 @@ public class QuoletController extends AbstractController {
 		return model;
 	}
 
+	@RequestMapping(value = "/display", method = RequestMethod.GET)
+	public ModelAndView display(@RequestParam int quoletId) {
+		ModelAndView model = new ModelAndView("quolet/display");
+		Quolet quolet = this.quoletService.findOne(quoletId);
+		model.addObject("quolet", quolet);
+		return model;
+	}
+
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam int quoletId) {
 		ModelAndView result;
